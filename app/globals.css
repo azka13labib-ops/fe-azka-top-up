@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-navy: #00236f;
+  --color-brand-navy-dark: #00164e;
+  --color-brand-navy-light: #f2f3ff;
+
+  --color-surface-page: #faf8ff;
+  --color-surface-card: #ffffff;
+  --color-surface-subtle: #f8fafc;
+  --color-surface-input: #f8fafc;
+
+  --color-ink-primary: #131b2e;
+  --color-ink-secondary: #444651;
+  --color-ink-muted: #757682;
+  --color-ink-hint: #c5c5d3;
+
+  --color-border-default: #e2e8f0;
+  --color-border-strong: #c5c5d3;
+  --color-border-focus: #00236f;
+
+  --color-accent-amber: #855300;
+  --color-accent-amber-bg: #ffddb8;
+  --color-accent-amber-text: #653e00;
+
+  --color-status-success: #00c65b;
+  --color-status-success-bg: #e6fced;
+  --color-status-success-border: #a3f7c2;
+  --color-status-warning: #fea619;
+  --color-status-warning-bg: #ffddb8;
+  --color-status-warning-border: #ffcb85;
+  --color-status-error: #ba1a1a;
+  --color-status-error-bg: #ffdad6;
+  --color-status-error-border: #ffb4ab;
+  --color-status-info: #4059aa;
+  --color-status-info-bg: #e2e7ff;
+  --color-status-info-border: #b6c4ff;
+
+  --color-wa: #25D366;
+
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  --font-size-xs: 11px;
+  --font-size-xs--line-height: 16px;
+  --font-size-xs--letter-spacing: 0.05em;
+
+  --font-size-sm: 13px;
+  --font-size-sm--line-height: 20px;
+
+  --font-size-base: 15px;
+  --font-size-base--line-height: 24px;
+
+  --font-size-lg: 17px;
+  --font-size-lg--line-height: 26px;
+
+  --font-size-xl: 20px;
+  --font-size-xl--line-height: 28px;
+
+  --font-size-2xl: 24px;
+  --font-size-2xl--line-height: 32px;
+
+  --font-size-3xl: 30px;
+  --font-size-3xl--line-height: 38px;
+
+  --font-size-4xl: 36px;
+  --font-size-4xl--line-height: 44px;
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+}
+
+:root {
+  --background: #faf8ff;
+  --foreground: #131b2e;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  min-height: 100vh;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F8FAFC;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
