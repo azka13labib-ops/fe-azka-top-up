@@ -53,7 +53,7 @@ export const HeroSection: React.FC = () => {
       badgeColor: 'bg-emerald-100 text-emerald-700 border-emerald-200',
       title: 'PUBG Mobile UC Deals',
       subtitle: 'Promo harga termurah untuk Unknown Cash (UC). Proses otomatis 24 Jam!',
-      priceText: 'Rp 8.000',
+      priceText: 'Rp 9.745',
       link: '/games/pubg-mobile',
       bgColor: 'from-emerald-50 to-teal-100/50 border-emerald-100',
       glowColor: 'bg-emerald-400/20',
