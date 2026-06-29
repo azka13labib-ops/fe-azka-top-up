@@ -21,6 +21,7 @@ export default function AdminProductsPage() {
   const { toast } = useToast();
   const [searchTerm, setSearchTerm] = useState('');
   const [syncLoading, setSyncLoading] = useState(false);
+  const [selectedGame, setSelectedGame] = useState('all');
 
   // Guard
   useEffect(() => {
@@ -30,8 +31,8 @@ export default function AdminProductsPage() {
   }, [user, authLoading, router]);
 
   // Fetch products
-  const { data: productsData, error, isLoading, mutate } = useSWR(
-    user && user.role === 'admin' ? '/admin/products' : null,
+  const { data: productsData, isLoading, mutate } = useSWR(
+    user && user.role === 'admin' ? '/admin/products?per_page=200' : null,
     fetcher
   );
 
@@ -53,8 +54,9 @@ export default function AdminProductsPage() {
       await api.put(`/admin/products/${productId}`, { is_active: active });
       toast('Status produk berhasil diperbarui!', 'success');
       mutate();
-    } catch (err: any) {
-      toast(err.message || 'Gagal mengubah status produk.', 'error');
+    } catch (err) {
+      const error = err as Error;
+      toast(error.message || 'Gagal mengubah status produk.', 'error');
       mutate();
     }
   };
@@ -75,8 +77,9 @@ export default function AdminProductsPage() {
       await api.put(`/admin/products/${productId}`, { selling_price: newPrice });
       toast('Harga jual produk berhasil diperbarui!', 'success');
       mutate();
-    } catch (err: any) {
-      toast(err.message || 'Gagal memperbarui harga produk.', 'error');
+    } catch (err) {
+      const error = err as Error;
+      toast(error.message || 'Gagal memperbarui harga produk.', 'error');
       mutate();
     }
   };
@@ -87,8 +90,9 @@ export default function AdminProductsPage() {
       await api.post('/admin/products/sync');
       toast('Berhasil sinkronisasi produk dengan Digiflazz!', 'success');
       mutate();
-    } catch (err: any) {
-      toast(err.message || 'Gagal sinkronisasi produk.', 'error');
+    } catch (err) {
+      const error = err as Error;
+      toast(error.message || 'Gagal sinkronisasi produk.', 'error');
     } finally {
       setSyncLoading(false);
     }
@@ -102,11 +106,13 @@ export default function AdminProductsPage() {
     );
   }
 
-  // Filter products based on search term
-  const filteredProducts = productsList.filter((p) =>
-    p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    p.digiflazz_sku.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Filter products based on search term and game slug
+  const filteredProducts = productsList.filter((p) => {
+    const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          p.digiflazz_sku.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesGame = selectedGame === 'all' || p.game?.slug === selectedGame;
+    return matchesSearch && matchesGame;
+  });
 
   return (
     <div className="flex bg-surface-page min-h-screen text-ink-secondary">
@@ -147,6 +153,20 @@ export default function AdminProductsPage() {
               className="w-full bg-surface-input border border-border-default rounded-lg h-9 pl-9 pr-3 text-xs text-ink-primary placeholder:text-ink-hint outline-none focus:border-brand-navy"
             />
             <Search className="absolute left-3 top-2.5 h-4 w-4 text-ink-hint shrink-0" />
+          </div>
+
+          <div className="flex items-center gap-2">
+            <label className="text-xs text-ink-muted hidden sm:inline">Game:</label>
+            <select
+              value={selectedGame}
+              onChange={(e) => setSelectedGame(e.target.value)}
+              className="bg-surface-input border border-border-default rounded-lg h-9 px-3 text-xs text-ink-primary outline-none focus:border-brand-navy cursor-pointer"
+            >
+              <option value="all">Semua Game</option>
+              <option value="mobile-legends">Mobile Legends</option>
+              <option value="free-fire">Free Fire</option>
+              <option value="pubg-mobile">PUBG Mobile</option>
+            </select>
           </div>
         </div>
 

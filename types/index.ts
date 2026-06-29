@@ -17,6 +17,7 @@ export interface Product {
   name: string                 // "100 Diamonds", "Weekly Pass"
   selling_price: number        // in IDR integer
   is_active: boolean
+  game?: Game
 }
 
 export interface Order {
