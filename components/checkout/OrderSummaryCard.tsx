@@ -12,6 +12,7 @@ interface OrderSummaryCardProps {
   zoneId: string;
   paymentLabel: string | null;
   adminFee: number;
+  idCheckerFee: number;
   discount: number;
   total: number;
   isSubmitting: boolean;
@@ -26,6 +27,7 @@ export const OrderSummaryCard: React.FC<OrderSummaryCardProps> = ({
   zoneId,
   paymentLabel,
   adminFee,
+  idCheckerFee,
   discount,
   total,
   isSubmitting,
@@ -78,10 +80,18 @@ export const OrderSummaryCard: React.FC<OrderSummaryCardProps> = ({
               {selectedProduct ? formatRupiah(selectedProduct.selling_price) : formatRupiah(0)}
             </span>
           </div>
-          <div className="flex justify-between text-xs text-ink-muted">
-            <span>Admin Fee</span>
-            <span className="font-mono">{formatRupiah(adminFee)}</span>
-          </div>
+          {adminFee > 0 && (
+            <div className="flex justify-between text-xs text-ink-muted">
+              <span>Admin Fee</span>
+              <span className="font-mono">{formatRupiah(adminFee)}</span>
+            </div>
+          )}
+          {idCheckerFee > 0 && (
+            <div className="flex justify-between text-xs text-ink-muted">
+              <span>ID Checker Fee</span>
+              <span className="font-mono">{formatRupiah(idCheckerFee)}</span>
+            </div>
+          )}
           {discount > 0 && (
             <div className="flex justify-between text-xs items-center">
               <span className="text-ink-muted">Diskon</span>

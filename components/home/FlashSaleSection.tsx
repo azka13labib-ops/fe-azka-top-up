@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const FlashSaleSection: React.FC = () => {
   // Mock timer: count down from a fixed duration on load
@@ -54,7 +55,7 @@ export const FlashSaleSection: React.FC = () => {
         <div className="lg:col-span-2 bg-white border-[0.5px] border-border-default rounded-2xl overflow-hidden flex flex-col sm:flex-row border-l-4 border-l-accent-amber shadow-none">
           {/* Image Placeholder */}
           <div className="w-full sm:w-2/5 bg-surface-subtle relative min-h-[200px] flex items-center justify-center border-r-[0.5px] border-border-default overflow-hidden">
-            <img src="/Thumbnail/mlbb-banner.jpg" alt="Mobile Legends Flash Sale" className="w-full h-full object-cover absolute inset-0" />
+            <Image src="/Thumbnail/mlbb-banner.jpg" alt="Mobile Legends Flash Sale" fill className="object-cover" />
             <span className="absolute top-4 left-4 bg-accent-amber text-white text-[10px] font-bold px-2.5 py-1 rounded-sm z-10">
               SAVE 40%
             </span>
@@ -66,9 +67,7 @@ export const FlashSaleSection: React.FC = () => {
               Mobile Legends
             </span>
             <h4 className="text-2xl font-medium text-brand-navy leading-tight mb-4 tracking-tight">
-              5000 + 1000
-              <br />
-              Bonus Diamonds
+              5000 + 1000 Diamonds
             </h4>
             
             <div className="mb-6">
@@ -92,7 +91,7 @@ export const FlashSaleSection: React.FC = () => {
         <div className="bg-white border-[0.5px] border-border-default rounded-2xl overflow-hidden flex flex-col shadow-none">
           {/* Image Placeholder */}
           <div className="w-full h-48 bg-surface-subtle relative flex items-center justify-center border-b-[0.5px] border-border-default overflow-hidden">
-             <img src="/Thumbnail/pubg.jpg" alt="PUBG Mobile Flash Sale" className="w-full h-full object-cover absolute inset-0" />
+             <Image src="/Thumbnail/pubg.jpg" alt="PUBG Mobile Flash Sale" fill className="object-cover" />
              <span className="absolute top-4 left-4 bg-brand-navy text-white text-[10px] font-bold px-2.5 py-1 rounded-sm z-10">
               SAVE 25%
             </span>

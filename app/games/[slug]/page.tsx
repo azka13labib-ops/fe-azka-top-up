@@ -57,8 +57,10 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
   const selectedProduct = products.find((p) => p.id === activeProductId) || null;
   
   // Pricing calculations
-  const subtotal = selectedProduct ? selectedProduct.selling_price : 0;
-  const total = Math.max(0, subtotal - discountAmount);
+  const subtotal = selectedProduct ? Number(selectedProduct.selling_price) : 0;
+  const adminFee = selectedProduct ? 1500 : 0;
+  const idCheckerFee = (selectedProduct && game && game.id_field_label) ? 150 : 0;
+  const total = Math.max(0, subtotal + adminFee + idCheckerFee - discountAmount);
 
   const handleApplyDiscount = (amount: number, code: string | null) => {
     setDiscountAmount(amount);
@@ -111,8 +113,9 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
       toast('Pesanan berhasil dibuat, mengarahkan ke pembayaran...', 'success');
 
       // Check if Midtrans Snap object is loaded
-      if (midtrans_snap_token && (window as any).snap) {
-        (window as any).snap.pay(midtrans_snap_token, {
+      const snap = (window as unknown as { snap?: { pay: (token: string, options: unknown) => void } }).snap;
+      if (midtrans_snap_token && snap) {
+        snap.pay(midtrans_snap_token, {
           onSuccess: () => {
             router.push(`/orders/${order_code}`);
           },
@@ -130,8 +133,9 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
         // Fallback or direct redirect
         router.push(`/orders/${order_code}`);
       }
-    } catch (err: any) {
-      const msg = err.message || 'Gagal memproses pesanan. Silakan coba kembali.';
+    } catch (err) {
+      const error = err as Error;
+      const msg = error.message || 'Gagal memproses pesanan. Silakan coba kembali.';
       toast(msg, 'error');
     } finally {
       setIsSubmitting(false);
@@ -254,7 +258,8 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
                 userId={userId}
                 zoneId={zoneId}
                 paymentLabel="Midtrans Snap"
-                adminFee={0}
+                adminFee={adminFee}
+                idCheckerFee={idCheckerFee}
                 discount={discountAmount}
                 total={total}
                 isSubmitting={isSubmitting}
